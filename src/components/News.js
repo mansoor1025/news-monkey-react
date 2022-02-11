@@ -19,10 +19,11 @@ const News = (props) => {
 
     const updated_news = async () => {
         props.set_progress(45)
-        let url = `https://newsapi.org/v2/top-headlines?country=${props.country}&category=${props.category}&apiKey=${props.api_key}`;
+        let url = `https://newsapi.org/v2/top-headlines?country=${props.country}&category=${props.category}&apiKey=${props.api_key}&page=${page + 1}`;
         let data = await fetch(url);
         let parseData = await data.json();
         props.set_progress(70)
+        setPage(page + 1)
         setArticles(articles.concat(parseData.articles))
         setTotalResults(parseData.totalResults)
         setLoading(false)
@@ -45,7 +46,7 @@ const News = (props) => {
         loader={<Spinner />}
     >
         <div className='container my-3' >
-            <h1 className='my-3 text-center'>Top Headlines - {capitalize(props.category)} Category</h1>
+            <h1 className='text-center' style={{ marginTop: '85px' }}>Top Headlines - {capitalize(props.category)} Category</h1>
             <div className="row">
                 {articles.map((element) => {
                     {
